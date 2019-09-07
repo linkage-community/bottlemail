@@ -107,7 +107,130 @@ describe("Lexer", () => {
 			"@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test"
 		test(`'${testcase1}' must equal to snapshot`, () => {
 			const tokens = tokenize(testcase1)
-			expect(tokens).toMatchSnapshot()
+			expect(tokens).toMatchInlineSnapshot(`
+			Array [
+			  Object {
+			    "payload": "@",
+			    "type": "AT",
+			  },
+			  Object {
+			    "payload": "otofune",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": " ",
+			    "type": "WHITESPACE",
+			  },
+			  Object {
+			    "payload": "Yo!",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": " ",
+			    "type": "WHITESPACE",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "smile",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": " ",
+			    "type": "WHITESPACE",
+			  },
+			  Object {
+			    "payload": "https",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "//github.com/",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": " ",
+			    "type": "WHITESPACE",
+			  },
+			  Object {
+			    "payload": "http",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "//[fe80",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "a1b3",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "125d",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "c1f8",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": ":",
+			    "type": "COLON",
+			  },
+			  Object {
+			    "payload": "4780]/",
+			    "type": "TEXT",
+			  },
+			  Object {
+			    "payload": " ",
+			    "type": "WHITESPACE",
+			  },
+			  Object {
+			    "payload": "@",
+			    "type": "AT",
+			  },
+			  Object {
+			    "payload": " ",
+			    "type": "WHITESPACE",
+			  },
+			  Object {
+			    "payload": "@",
+			    "type": "AT",
+			  },
+			  Object {
+			    "payload": "test",
+			    "type": "TEXT",
+			  },
+			]
+		`)
 		})
 
 		const testcase2 = "@ :smile:"
