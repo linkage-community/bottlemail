@@ -1,4 +1,4 @@
-import tokenize, { TokenList } from "./lexer";
+import tokenize, { TokenList } from "./internal/lexer";
 import { NodeList } from "./types";
 
 const check = (t: TokenList['type'], p?: (s: string) => boolean) => (token: TokenList) => {
