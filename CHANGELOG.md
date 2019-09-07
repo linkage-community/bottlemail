@@ -1,3 +1,9 @@
+0.1.3
+===
+- `@at@at` が `at@at` というメンションと解釈されていたバグの修正
+    - https://github.com/linkage-community/bottlemail/issues/2
+
+
 0.1.2
 ===
 - [.npmignore] 追加
