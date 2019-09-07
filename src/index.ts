@@ -1,2 +1,2 @@
-export * from "./types";
-export { default } from "./parser";
+export * from "./types"
+export { default } from "./parser"
