@@ -8,11 +8,21 @@ export type TokenType =
   | Token<"WHITESPACE">
   | Token<"COLON">;
 
+// Character Level Spec
+const WHITESPACE = '\s'
+const AT = '@'
+const COLON = ':'
+const CHAR = `[^${WHITESPACE}${AT}${COLON}]`
+
+// Exp
+const WhiteSpaceRegExp = new RegExp(`^${WHITESPACE}+`)
+const TextRegExp = new RegExp(`^${CHAR}+`)
+
 export default function tokenize(s: string, iv: TokenType[] = []): TokenType[] {
   if (s.length === 0) return iv;
 
   // remove whitespaces
-  const ws = /^\s+/.exec(s);
+  const ws = WhiteSpaceRegExp.exec(s);
   if (ws) {
     return tokenize(s.substr(ws[0].length), [
       ...iv,
@@ -24,7 +34,7 @@ export default function tokenize(s: string, iv: TokenType[] = []): TokenType[] {
   }
 
   // atmark
-  if (s.startsWith("@")) {
+  if (s.startsWith(AT)) {
     return tokenize(s.substr(1), [
       ...iv,
       {
@@ -35,7 +45,7 @@ export default function tokenize(s: string, iv: TokenType[] = []): TokenType[] {
   }
 
   // colon
-  if (s.startsWith(":")) {
+  if (s.startsWith(COLON)) {
     return tokenize(s.substr(1), [
       ...iv,
       {
@@ -46,7 +56,7 @@ export default function tokenize(s: string, iv: TokenType[] = []): TokenType[] {
   }
 
   // text
-  const trr = /^[^\s:]+/.exec(s);
+  const trr = TextRegExp.exec(s);
   return tokenize(s.substr(trr![0].length), [
     ...iv,
     {
