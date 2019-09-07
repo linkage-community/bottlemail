@@ -9,15 +9,18 @@ const check = (t: TokenType["type"], p?: (s: string) => boolean) => (
 };
 const payloadReducer = (pv: string, t: TokenType): string => pv + t.payload;
 
+const checkAT = check("AT");
+const checkCOLON = check("COLON");
+const checkScreenName = check("TEXT", p => /^[0-9A-Za-z_]{1,20}$/.test(p));
+const checkLinkScheme = check("TEXT", p => ["http", "https"].includes(p));
+const checkLinkHierPart = check("TEXT", p => p.startsWith("//"));
+const checkEmojiName = check("TEXT", p => /^\w+$/.test(p));
+
 export const parseOne = (tokens: TokenType[]): [NodeType | null, number] => {
   if (tokens.length === 0) return [null, 0];
 
   // Mention
-  if (
-    tokens.length >= 2 &&
-    check("AT")(tokens[0]) &&
-    check("TEXT")(tokens[1])
-  ) {
+  if (tokens.length >= 2 && checkAT(tokens[0]) && checkScreenName(tokens[1])) {
     return [
       {
         kind: "Mention",
@@ -31,9 +34,9 @@ export const parseOne = (tokens: TokenType[]): [NodeType | null, number] => {
   // Link
   if (
     tokens.length >= 3 &&
-    check("TEXT", p => ["http", "https"].includes(p))(tokens[0]) &&
-    check("COLON")(tokens[1]) &&
-    check("TEXT", p => p.startsWith("//"))(tokens[2])
+    checkLinkScheme(tokens[0]) &&
+    checkCOLON(tokens[1]) &&
+    checkLinkHierPart(tokens[2])
   ) {
     const idx = tokens.findIndex(v => check("WHITESPACE")(v));
     // idx あるならそこまでで打ちどめ
@@ -53,9 +56,9 @@ export const parseOne = (tokens: TokenType[]): [NodeType | null, number] => {
   // emoji name :thinking:
   if (
     tokens.length >= 3 &&
-    check("COLON")(tokens[0]) &&
-    check("TEXT", p => /^\w+$/.test(p))(tokens[1]) &&
-    check("COLON")(tokens[2])
+    checkCOLON(tokens[0]) &&
+    checkEmojiName(tokens[1]) &&
+    checkCOLON(tokens[2])
   ) {
     return [
       {

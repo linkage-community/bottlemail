@@ -9,14 +9,14 @@ export type TokenType =
   | Token<"COLON">;
 
 // Character Level Spec
-const WHITESPACE = '\s'
-const AT = '@'
-const COLON = ':'
-const CHAR = `[^${WHITESPACE}${AT}${COLON}]`
+const WHITESPACE = "s";
+const AT = "@";
+const COLON = ":";
+const CHAR = `[^${WHITESPACE}${AT}${COLON}]`;
 
 // Exp
-const WhiteSpaceRegExp = new RegExp(`^${WHITESPACE}+`)
-const TextRegExp = new RegExp(`^${CHAR}+`)
+const WhiteSpaceRegExp = new RegExp(`^${WHITESPACE}+`);
+const TextRegExp = new RegExp(`^${CHAR}+`);
 
 export default function tokenize(s: string, iv: TokenType[] = []): TokenType[] {
   if (s.length === 0) return iv;
