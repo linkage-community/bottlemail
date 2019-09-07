@@ -9,7 +9,7 @@ export type TokenType =
   | Token<"COLON">;
 
 // Character Level Spec
-const WHITESPACE = "s";
+const WHITESPACE = "\\s";
 const AT = "@";
 const COLON = ":";
 const CHAR = `[^${WHITESPACE}${AT}${COLON}]`;
