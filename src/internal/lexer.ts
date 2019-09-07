@@ -2,9 +2,9 @@ type Token<T extends string> = {
   type: T,
   payload: string,
 }
-export type TokenList = Token<"AT"> | Token<"TEXT"> | Token<"WHITESPACE"> | Token<"COLON">
+export type TokenType = Token<"AT"> | Token<"TEXT"> | Token<"WHITESPACE"> | Token<"COLON">
 
-export default function tokenize(s: string, iv: TokenList[] = []): TokenList[] {
+export default function tokenize(s: string, iv: TokenType[] = []): TokenType[] {
   if (s.length === 0) return iv
 
   // remove whitespaces

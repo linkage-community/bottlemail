@@ -20,18 +20,18 @@ export const MentionKind = 'Mention'
 // eg: raw => '@dolphin', value => 'dolphin'
 export type Mention = Node<typeof MentionKind>
 
-export type NodeList = Link | Text | Mention | EmojiName
+export type NodeType = Link | Text | Mention | EmojiName
 
 // helpers
-export const isText = (n: NodeList): n is Text => {
+export const isText = (n: NodeType): n is Text => {
   return n.kind === TextKind
 }
-export const isEmojiName = (n: NodeList): n is EmojiName => {
+export const isEmojiName = (n: NodeType): n is EmojiName => {
   return n.kind === EmojiNameKind
 }
-export const isLink = (n: NodeList): n is Link => {
+export const isLink = (n: NodeType): n is Link => {
   return n.kind === LinkKind
 }
-export const isMention = (n: NodeList): n is Mention => {
+export const isMention = (n: NodeType): n is Mention => {
   return n.kind === MentionKind
 }

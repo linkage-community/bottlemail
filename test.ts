@@ -9,5 +9,6 @@ function test(s: string) {
   console.timeEnd('q')
 }
 
+test('')
 test('     ')
 test('@otofune Yo! :smile: https://github.com/poooe http://[fe80::a1b3:125d:c1f8:4780]/ @ @yo')
