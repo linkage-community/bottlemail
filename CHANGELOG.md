@@ -1,8 +1,14 @@
+0.1.5
+===
+- lexer: 空白が認識されなかったバグの修正
+- parser: Mention でより厳密にスクリーンネーム部をチェックをするように
+  + 参照: https://github.com/rinsuki/sea/blob/28f8a3d2de31df4d2e294b9f0fe4558f8f132175/src/db/entities/user.ts#L17
+- parser: チェック関数をメモするように
+
 0.1.3
 ===
 - `@at@at` が `at@at` というメンションと解釈されていたバグの修正
     - https://github.com/linkage-community/bottlemail/issues/2
-
 
 0.1.2
 ===
