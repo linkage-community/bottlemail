@@ -53,3 +53,8 @@ type NodeType = {
 
 ### Type Guard
 `is${kind}` というヘルパ関数があり、これも [src/types.ts](./src/types.ts) に置いている
+
+## 想定 Q&A
+
+### 空文字列 (`""`) のときはどのような結果になりますか？
+空の配列になる
