@@ -1,6 +1,6 @@
 {
   "name": "@linkage-community/bottlemail",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "repository": "ssh://git@github.com/linkage-community/postbody.git",
   "author": "otofune <otofune@otofune.me>",
