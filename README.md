@@ -42,8 +42,7 @@ type NodeType = {
 }
 ```
 
-それぞれのフィールドの例
----
+### それぞれのフィールドの例
 
 種類|kind|raw|value
 --|--|--|--
@@ -51,3 +50,6 @@ type NodeType = {
 メンション|`Mention`|`@dolphin`|`dolphin`
 テキスト|`Text`|`yee haw`|`yee haw`
 ウェブサイト|`Link`|`https://github.com`|`https://github.com`
+
+### Type Guard
+`is${kind}` というヘルパ関数があり、これも [src/types.ts](./src/types.ts) に置いている
