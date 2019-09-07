@@ -1,11 +1,10 @@
-type GenToken<T extends string> = {
+type Token<T extends string> = {
   type: T,
   payload: string,
 }
+export type TokenList = Token<"AT"> | Token<"TEXT"> | Token<"WHITESPACE"> | Token<"COLON">
 
-export type Token = GenToken<"AT"> | GenToken<"TEXT"> | GenToken<"WHITESPACE"> | GenToken<"COLON">
-
-export default function tokenize(s: string, iv: Token[] = []): Token[] {
+export default function tokenize(s: string, iv: TokenList[] = []): TokenList[] {
   if (s.length === 0) return iv
 
   // remove whitespaces

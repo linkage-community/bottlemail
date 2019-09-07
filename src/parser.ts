@@ -1,13 +1,13 @@
-import tokenize, { Token } from "./lexer";
+import tokenize, { TokenList } from "./lexer";
 import { NodeList } from "./types";
 
-const check = (t: Token['type'], p?: (s: string) => boolean) => (token: Token) => {
+const check = (t: TokenList['type'], p?: (s: string) => boolean) => (token: TokenList) => {
   if (!p) return token.type === t
   return token.type === t && p(token.payload)
 }
-const payloadReducer = (pv: string, t: Token): string => pv+t.payload
+const payloadReducer = (pv: string, t: TokenList): string => pv+t.payload
 
-export const parseOne = (tokens: Token[]): [NodeList, number] => {
+export const parseOne = (tokens: TokenList[]): [NodeList, number] => {
   if (tokens.length === 0) return [undefined, 0]
 
   // Mention
