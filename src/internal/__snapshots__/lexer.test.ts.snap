@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Lexer Complex cases '@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test' must equal to snapshot 1`] = `
+Array [
+  Object {
+    "payload": "@",
+    "type": "AT",
+  },
+  Object {
+    "payload": "otofune",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": " ",
+    "type": "WHITESPACE",
+  },
+  Object {
+    "payload": "Yo!",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": " ",
+    "type": "WHITESPACE",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "smile",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": " ",
+    "type": "WHITESPACE",
+  },
+  Object {
+    "payload": "https",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "//github.com/",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": " ",
+    "type": "WHITESPACE",
+  },
+  Object {
+    "payload": "http",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "//[fe80",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "a1b3",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "125d",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "c1f8",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": ":",
+    "type": "COLON",
+  },
+  Object {
+    "payload": "4780]/",
+    "type": "TEXT",
+  },
+  Object {
+    "payload": " ",
+    "type": "WHITESPACE",
+  },
+  Object {
+    "payload": "@",
+    "type": "AT",
+  },
+  Object {
+    "payload": " ",
+    "type": "WHITESPACE",
+  },
+  Object {
+    "payload": "@",
+    "type": "AT",
+  },
+  Object {
+    "payload": "test",
+    "type": "TEXT",
+  },
+]
+`;
