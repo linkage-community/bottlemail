@@ -14,7 +14,7 @@ const checkCOLON = check("COLON")
 const checkScreenName = check("TEXT", p => /^[0-9A-Za-z_]{1,20}$/.test(p))
 const checkLinkScheme = check("TEXT", p => ["http", "https"].includes(p))
 const checkLinkHierPart = check("TEXT", p => p.startsWith("//"))
-const checkEmojiName = check("TEXT", p => /^\w+$/.test(p))
+const checkEmojiName = check("TEXT", p => /^[A-Za-z0-9-_+]+$/.test(p))
 
 export const parseOne = (tokens: TokenType[]): [NodeType | null, number] => {
 	if (tokens.length === 0) return [null, 0]
