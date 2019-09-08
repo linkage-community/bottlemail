@@ -1,3 +1,9 @@
+1.0.0
+===
+- parser: :+1: :-1: が絵文字名として認識されない問題の修正
+	+ https://github.com/linkage-community/bottlemail/issues/6
+- internal: テストを追加
+
 0.1.5
 ===
 - lexer: 空白が認識されなかったバグの修正
