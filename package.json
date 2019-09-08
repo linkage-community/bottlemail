@@ -10,6 +10,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.4",
+    "codecov": "^3.5.0",
     "jest": "^24.9.0",
     "pictograph": "^2.2.1",
     "prettier": "^1.18.2",
@@ -20,8 +21,8 @@
   "scripts": {
     "lint": "prettier --check 'src/**/*.ts'",
     "format": "prettier --write 'src/**/*.ts'",
-		"test": "yarn lint && yarn jest",
-		"jest": "jest --coverage",
+    "test": "yarn lint && yarn jest",
+    "jest": "jest --coverage",
     "build": "tsc",
     "prepublishOnly": "yarn test && rm -rf dist && yarn build"
   }
