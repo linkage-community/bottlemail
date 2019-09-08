@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Parser parse must parse '@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test' as equivalent to the snapshot. 1`] = `
+exports[`Parser must parse '@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test' as equivalent to the snapshot. 1`] = `
 Array [
   Object {
     "kind": "Mention",
