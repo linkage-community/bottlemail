@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser parse must parse '@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test' as equivalent to the snapshot. 1`] = `
+Array [
+  Object {
+    "kind": "Mention",
+    "raw": "@otofune",
+    "value": "otofune",
+  },
+  Object {
+    "kind": "Text",
+    "raw": " Yo! ",
+    "value": " Yo! ",
+  },
+  Object {
+    "kind": "EmojiName",
+    "raw": ":smile:",
+    "value": "smile",
+  },
+  Object {
+    "kind": "Text",
+    "raw": " ",
+    "value": " ",
+  },
+  Object {
+    "kind": "Link",
+    "raw": "https://github.com/",
+    "value": "https://github.com/",
+  },
+  Object {
+    "kind": "Text",
+    "raw": " ",
+    "value": " ",
+  },
+  Object {
+    "kind": "Link",
+    "raw": "http://[fe80::a1b3:125d:c1f8:4780]/",
+    "value": "http://[fe80::a1b3:125d:c1f8:4780]/",
+  },
+  Object {
+    "kind": "Text",
+    "raw": " @ ",
+    "value": " @ ",
+  },
+  Object {
+    "kind": "Mention",
+    "raw": "@test",
+    "value": "test",
+  },
+]
+`;
