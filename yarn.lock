@@ -2648,6 +2648,11 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
+pictograph@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/pictograph/-/pictograph-2.2.1.tgz#ca8055f2448084e3133c82e4a40b02bac19042c4"
+  integrity sha512-9aXk09VoTngPhxghBQxysLZ2zuvUtdsMtsHzS34wnq1pD5xniDlbAP172iGzsAX1QzE74qSqeYJk7McHs02eXA==
+
 pify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
