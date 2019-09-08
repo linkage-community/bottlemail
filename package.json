@@ -20,7 +20,8 @@
   "scripts": {
     "lint": "prettier --check 'src/**/*.ts'",
     "format": "prettier --write 'src/**/*.ts'",
-    "test": "yarn lint && jest",
+		"test": "yarn lint && yarn jest",
+		"jest": "jest --coverage",
     "build": "tsc",
     "prepublishOnly": "yarn test && rm -rf dist && yarn build"
   }
