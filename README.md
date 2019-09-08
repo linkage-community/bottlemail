@@ -1,4 +1,4 @@
-@linkage-community/bottlemail [![npm version](https://badge.fury.io/js/%40linkage-community%2Fbottlemail.svg)](https://badge.fury.io/js/%40linkage-community%2Fbottlemail)
+@linkage-community/bottlemail [![npm version](https://badge.fury.io/js/%40linkage-community%2Fbottlemail.svg)](https://badge.fury.io/js/%40linkage-community%2Fbottlemail) [![codecov](https://codecov.io/gh/linkage-community/bottlemail/branch/master/graph/badge.svg)](https://codecov.io/gh/linkage-community/bottlemail)
 ===
 
 これはなに
