@@ -3,6 +3,9 @@ import tokenize from "./internal/lexer"
 import { parseOnce } from "./internal/parse-once"
 
 export default (s: string) => {
+	// TypeScript scripts will be compiled to JavaScript, so users can pass ANY values not string...
+	if (typeof s !== "string") return []
+
 	let tokens = tokenize(s)
 	const nodes: NodeType[] = []
 	while (tokens.length > 0) {

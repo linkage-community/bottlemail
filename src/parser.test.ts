@@ -2,6 +2,11 @@ import { MentionKind, NodeType } from "./types"
 import parse from "./parser"
 
 describe("Parser", () => {
+	test("must return `[]` when no argument given.", () => {
+		// JavaScript user can use
+		expect((parse as any)()).toEqual([])
+	})
+
 	test("must parse empty string as `[]`.", () => {
 		expect(parse("")).toEqual([])
 	})
