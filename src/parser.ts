@@ -1,18 +1,176 @@
-import { NodeType } from "./types"
-import tokenize from "./internal/lexer"
-import { parseOnce } from "./internal/parse-once"
+import {
+	NodeType,
+	TextKind as UnknownKind,
+	EmojiNameKind,
+	MentionKind,
+	LinkKind
+} from "./types"
+
+const lowercase = "abcdefghijklmnopqrstuvwxyz".split("")
+const uppercase = lowercase.map(c => c.toUpperCase())
+const numeric = "1234567890".split("")
+const whitespace = ["\n", " "]
+
+type Diff<L, R> = L extends R ? (R extends L ? never : R) : L
+type ExplicitKind = Diff<NodeType["kind"], "Text">
+
+type Rule = {
+	kind: ExplicitKind
+	startsWith: string
+	minimumValueLength: number
+	leaveChars: string[]
+	includeLeaveChar: boolean
+	validValueChars?: string[]
+	transformToValue?: (s: string) => string
+}
+
+// 優先度順
+const rules: Rule[] = [
+	{
+		kind: LinkKind,
+		startsWith: "http",
+		minimumValueLength: 7,
+		includeLeaveChar: false,
+		leaveChars: whitespace
+	},
+	{
+		kind: MentionKind,
+		startsWith: "@",
+		validValueChars: [...lowercase, ...uppercase, ...numeric, "_"],
+		transformToValue: s => s.slice(1),
+		minimumValueLength: 1,
+		includeLeaveChar: false,
+		leaveChars: whitespace
+	},
+	{
+		kind: EmojiNameKind,
+		startsWith: ":",
+		validValueChars: [
+			...lowercase,
+			...uppercase,
+			...numeric,
+			..."+-_".split("")
+		],
+		transformToValue: s => s.slice(1, s.length - 1),
+		minimumValueLength: 1,
+		includeLeaveChar: true,
+		leaveChars: [":"]
+	}
+]
+
+function* parse(source: string) {
+	let rule: Rule | null = null
+	let consumedCount: number | null = null
+
+	function consume(rule: Rule | null, end: number): NodeType {
+		// [consumedCount ? consumedCount+1 : 0, end]
+		const raw = source.slice(consumedCount ? consumedCount + 1 : 0, end + 1)
+		const value =
+			rule && rule.transformToValue ? rule.transformToValue(raw) : raw
+
+		consumedCount = end
+
+		if (rule !== null && value.length >= rule.minimumValueLength) {
+			return {
+				kind: rule.kind,
+				raw,
+				value
+			}
+		} else {
+			return {
+				kind: UnknownKind,
+				raw,
+				value: raw
+			}
+		}
+	}
+
+	for (let i = 0; i < source.length; i++) {
+		const char = source[i]
+
+		/** Dig values */
+		if (rule !== null) {
+			if (
+				rule.validValueChars !== undefined &&
+				rule.validValueChars.includes(char)
+			) {
+				continue
+			} else if (
+				rule.includeLeaveChar == true &&
+				rule.leaveChars.includes(char)
+			) {
+				/* include & leave, [consumedCount+1 || 0, i[. */
+				yield consume(rule, i)
+				rule = null
+				continue
+			} else if (rule.leaveChars.includes(char)) {
+				/* exclude & leave, [consumedCount+1 || 0, i]. MUST NOT USE continue because must find kind with current char */
+				yield consume(rule, i - 1)
+				rule = null
+			} else if (rule && rule.validValueChars === undefined) {
+				// catch-all
+				continue
+			} else if (rule && rule.validValueChars) {
+				/* !! bye !! */
+				rule = null
+			}
+		}
+
+		/** Dig kind */
+		if (whitespace.includes(char)) continue
+		rule =
+			rules.find(({ startsWith }): boolean => {
+				if (startsWith.length === 1) {
+					return char === startsWith
+				}
+				return source.slice(i, i + startsWith.length) === startsWith
+			}) || null
+		if (rule !== null) {
+			/** emit unknown type */
+			// [consumeCount+1, i[, [0, i[
+			yield consume(null, i - 1)
+		}
+	}
+
+	// Final
+	yield consume(rule, source.length)
+}
+
+function optimizeNodes(nodes: NodeType[]): NodeType[] {
+	return nodes
+		.filter(node => {
+			if (node.raw.length === 0) return false
+			return true
+		})
+		.reduce(
+			(optimizedNodes, node) => {
+				if (
+					node.kind === "Text" &&
+					optimizedNodes.length > 0 &&
+					optimizedNodes[optimizedNodes.length - 1].kind === "Text"
+				) {
+					const last = optimizedNodes.pop()!
+					last.value += node.value
+					last.raw += node.raw
+					optimizedNodes.push(last)
+					return optimizedNodes
+				}
+				optimizedNodes.push(node)
+				return optimizedNodes
+			},
+			[] as NodeType[]
+		)
+}
 
 export default (s: string) => {
 	// TypeScript scripts will be compiled to JavaScript, so users can pass ANY values not string...
 	if (typeof s !== "string") return []
+	if (s.length === 0) return []
 
-	let tokens = tokenize(s)
-	const nodes: NodeType[] = []
-	while (tokens.length > 0) {
-		const [node, length] = parseOnce(tokens)
-		tokens = tokens.slice(length)
-		// note: null になるのは tokens が length: 0 のときのみ
-		nodes.push(node!)
+	const nodes = [] as NodeType[]
+	for (const node of parse(s)) {
+		nodes.push(node)
 	}
-	return nodes
+	const on = optimizeNodes(nodes)
+	return on
 }

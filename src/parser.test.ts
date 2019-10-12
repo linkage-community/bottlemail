@@ -1,29 +1,56 @@
-import { MentionKind, NodeType } from "./types"
+import { MentionKind, TextKind, EmojiNameKind } from "./types"
 import parse from "./parser"
 
+import pictograph from "pictograph"
+
 describe("Parser", () => {
-	test("must return `[]` when no argument given.", () => {
+	it("must return `[]` when no argument given.", () => {
 		// JavaScript user can use
 		expect((parse as any)()).toEqual([])
 	})
 
-	test("must parse empty string as `[]`.", () => {
+	it("must parse empty string as `[]`.", () => {
 		expect(parse("")).toEqual([])
 	})
 
-	const testcase1 =
-		"@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test"
-	test(`must parse '${testcase1}' as equivalent to the snapshot.`, () => {
-		expect(parse(testcase1)).toMatchSnapshot()
+	describe("complex cases", () => {
+		const testcase1 =
+			"@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test"
+		test(`must parse '${testcase1}' as equivalent to the snapshot.`, () => {
+			expect(parse(testcase1)).toMatchSnapshot()
+		})
+
+		const testcase2 =
+			"This includes special identifiers :aa @*  but all are invalid as Emoji, Mention."
+		test(`must parse '${testcase2}' as '${TextKind}' kind node.`, () => {
+			expect(parse(testcase2)).toEqual([
+				{ kind: TextKind, value: testcase2, raw: testcase2 }
+			])
+		})
 	})
 
-	const testcase2 = "@mention@mention"
-	test(`must parse '${testcase2}' as '${MentionKind}' kind nodes.`, () => {
-		const expected: NodeType[] = new Array<NodeType>(2).fill({
-			kind: MentionKind,
-			value: "mention",
-			raw: "@mention"
+	describe("simple cases", () => {
+		const testcase1 = "@dolphin"
+		const testcase1Expected = "dolphin"
+		it(`must parse '${testcase1}' as node with value '${testcase1Expected}'`, () => {
+			expect(parse(testcase1)).toEqual([
+				{ kind: MentionKind, value: testcase1Expected, raw: testcase1 }
+			])
 		})
-		expect(parse(testcase2)).toEqual(expected)
+
+		describe("about " + EmojiNameKind, () => {
+			for (const name of Object.keys(pictograph.dic)) {
+				const emojiName = `:${name}:`
+				it(`must parse '${emojiName}' as ${EmojiNameKind} node with value '${name}'`, () => {
+					expect(parse(emojiName)).toEqual([
+						{
+							kind: EmojiNameKind,
+							value: name,
+							raw: emojiName
+						}
+					])
+				})
+			}
+		})
 	})
 })
