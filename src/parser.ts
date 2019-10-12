@@ -90,28 +90,33 @@ function* parse(source: string) {
 
 		/** Dig values */
 		if (rule !== null) {
+			// 1. Valid -> continue
 			if (
 				rule.validValueChars !== undefined &&
 				rule.validValueChars.includes(char)
 			) {
 				continue
-			} else if (
-				rule.includeLeaveChar == true &&
-				rule.leaveChars.includes(char)
-			) {
-				/* include & leave, [consumedCount+1 || 0, i[. */
+			}
+
+			// 2. Escape -> consume
+			if (rule.includeLeaveChar == true && rule.leaveChars.includes(char)) {
+				/* include & leave, [consumedCount+1 || 0, i]. */
 				yield consume(rule, i)
 				rule = null
 				continue
 			} else if (rule.leaveChars.includes(char)) {
-				/* exclude & leave, [consumedCount+1 || 0, i]. MUST NOT USE continue because must find kind with current char */
+				/* exclude & leave, [consumedCount+1 || 0, i[. MUST NOT USE continue because must find kind with current char */
 				yield consume(rule, i - 1)
 				rule = null
-			} else if (rule && rule.validValueChars === undefined) {
-				// catch-all
+			}
+
+			// 3. If no validValueChars, all are valid -> continue
+			if (rule && rule.validValueChars === undefined) {
 				continue
-			} else if (rule && rule.validValueChars) {
-				/* !! bye !! */
+			}
+
+			// Z. Invalid -> Left to dig new kind
+			if (rule && rule.validValueChars) {
 				rule = null
 			}
 		}
@@ -132,7 +137,6 @@ function* parse(source: string) {
 		}
 	}
 
-	// Final
 	yield consume(rule, source.length)
 }
 
