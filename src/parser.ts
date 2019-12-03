@@ -64,7 +64,10 @@ function* parse(source: string) {
 
 	function consume(rule: Rule | null, end: number): NodeType {
 		// [consumedCount ? consumedCount+1 : 0, end]
-		const raw = source.slice(consumedCount ? consumedCount + 1 : 0, end + 1)
+		const raw = source.slice(
+			consumedCount != null ? consumedCount + 1 : 0,
+			end + 1
+		)
 		const value =
 			rule && rule.transformToValue ? rule.transformToValue(raw) : raw
 
