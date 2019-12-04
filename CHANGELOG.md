@@ -1,3 +1,8 @@
+2.0.1
+===
+- バグ修正: [2文字目からテキストでない何かがはじまるとバグるのを修正](https://github.com/linkage-community/bottlemail/pull/49)
+  + Thanks! @428rinsuki
+
 2.0.0
 ===
 - 内部実装のアーキテクチャが大幅に変更され、パース結果が破壊的に変更されたためメジャーバージョンアップしました (2faa213fef1b91367f9daa1bdf30bfdf85f6e5d3)
