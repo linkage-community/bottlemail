@@ -149,24 +149,21 @@ function optimizeNodes(nodes: NodeType[]): NodeType[] {
 			if (node.raw.length === 0) return false
 			return true
 		})
-		.reduce(
-			(optimizedNodes, node) => {
-				if (
-					node.kind === "Text" &&
-					optimizedNodes.length > 0 &&
-					optimizedNodes[optimizedNodes.length - 1].kind === "Text"
-				) {
-					const last = optimizedNodes.pop()!
-					last.value += node.value
-					last.raw += node.raw
-					optimizedNodes.push(last)
-					return optimizedNodes
-				}
-				optimizedNodes.push(node)
+		.reduce((optimizedNodes, node) => {
+			if (
+				node.kind === "Text" &&
+				optimizedNodes.length > 0 &&
+				optimizedNodes[optimizedNodes.length - 1].kind === "Text"
+			) {
+				const last = optimizedNodes.pop()!
+				last.value += node.value
+				last.raw += node.raw
+				optimizedNodes.push(last)
 				return optimizedNodes
-			},
-			[] as NodeType[]
-		)
+			}
+			optimizedNodes.push(node)
+			return optimizedNodes
+		}, [] as NodeType[])
 }
 
 export default (s: string) => {
