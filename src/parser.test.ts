@@ -53,4 +53,12 @@ describe("Parser", () => {
 			}
 		})
 	})
+
+	it(`"(@dolphin hi)" correctly parse`, () => {
+		expect(parse("(@dolphin hi)")).toEqual([
+			{ kind: TextKind, value: "(", raw: "(" },
+			{ kind: MentionKind, value: "dolphin", raw: "@dolphin" },
+			{ kind: TextKind, value: " hi)", raw: " hi)" }
+		])
+	})
 })
