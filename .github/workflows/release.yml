@@ -1,4 +1,4 @@
-name: Run tests
+name: Release package to registry
 on:
   push:
     tags:
