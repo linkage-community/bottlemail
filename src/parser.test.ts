@@ -62,6 +62,21 @@ describe("Parser", () => {
 		])
 	})
 
+	const bottlemail = "@linkagecommunity/bottlemail"
+	it(`"${bottlemail}" must be parsed as Text`, () => {
+		expect(parse(bottlemail)).toEqual([
+			{ kind: TextKind, value: bottlemail, raw: bottlemail }
+		])
+	})
+
+	const cancelMention = "\\@linkage"
+	it(`"${cancelMention}" must be parsed as Text`, () => {
+		console.dir(cancelMention)
+		expect(parse(cancelMention)).toEqual([
+			{ kind: TextKind, value: cancelMention, raw: cancelMention }
+		])
+	})
+
 	const nonURLStartsWithHTTP = "httpisgod"
 	it(`parse "${nonURLStartsWithHTTP}" as Text`, () => {
 		expect(parse(nonURLStartsWithHTTP)).toEqual([
