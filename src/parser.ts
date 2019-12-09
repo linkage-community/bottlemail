@@ -16,7 +16,7 @@ type ExplicitKind = Diff<NodeType["kind"], "Text">
 
 type Rule = {
 	kind: ExplicitKind
-	startsWith: string
+	startsWith: string[]
 	minimumValueLength: number
 	leaveChars: string[]
 	includeLeaveChar: boolean
@@ -28,14 +28,14 @@ type Rule = {
 const rules: Rule[] = [
 	{
 		kind: LinkKind,
-		startsWith: "http",
+		startsWith: ["http://", "https://"],
 		minimumValueLength: 7,
 		includeLeaveChar: false,
 		leaveChars: whitespace
 	},
 	{
 		kind: MentionKind,
-		startsWith: "@",
+		startsWith: ["@"],
 		validValueChars: [...lowercase, ...uppercase, ...numeric, "_"],
 		transformToValue: s => s.slice(1),
 		minimumValueLength: 1,
@@ -44,7 +44,7 @@ const rules: Rule[] = [
 	},
 	{
 		kind: EmojiNameKind,
-		startsWith: ":",
+		startsWith: [":"],
 		validValueChars: [
 			...lowercase,
 			...uppercase,
@@ -128,10 +128,11 @@ function* parse(source: string) {
 		if (whitespace.includes(char)) continue
 		rule =
 			rules.find(({ startsWith }): boolean => {
-				if (startsWith.length === 1) {
-					return char === startsWith
-				}
-				return source.slice(i, i + startsWith.length) === startsWith
+				return startsWith.some(expected => {
+					const actual =
+						expected.length === 1 ? char : source.slice(i, i + expected.length)
+					return expected === actual
+				})
 			}) || null
 		if (rule !== null) {
 			/** emit unknown type */
