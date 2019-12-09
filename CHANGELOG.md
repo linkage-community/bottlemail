@@ -1,3 +1,7 @@
+2.1.0
+===
+- 新機能: [バックスラッシュでルール検出をスキップできるように](https://github.com/linkage-community/bottlemail/pull/60)
+
 2.0.2
 ===
 - バグ修正: [http から始まる文字列すべてが Link と扱われる不具合の修正](https://github.com/linkage-community/bottlemail/pull/56)
