@@ -128,12 +128,11 @@ function* parse(source: string) {
 		if (whitespace.includes(char)) continue
 		rule =
 			rules.find(({ startsWith }): boolean => {
-				if (startsWith.length === 1 && startsWith[0].length === 1) {
-					return char === startsWith[0]
-				}
-				return startsWith.some(
-					starts => source.slice(i, i + starts.length) === starts
-				)
+				return startsWith.some(expected => {
+					const actual =
+						expected.length === 1 ? char : source.slice(i, i + expected.length)
+					return expected === actual
+				})
 			}) || null
 		if (rule !== null) {
 			/** emit unknown type */
