@@ -71,7 +71,6 @@ describe("Parser", () => {
 
 	const cancelMention = "\\@linkage"
 	it(`"${cancelMention}" must be parsed as Text`, () => {
-		console.dir(cancelMention)
 		expect(parse(cancelMention)).toEqual([
 			{ kind: TextKind, value: cancelMention, raw: cancelMention }
 		])
