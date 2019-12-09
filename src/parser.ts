@@ -126,6 +126,11 @@ function* parse(source: string) {
 
 		/** Dig kind */
 		if (whitespace.includes(char)) continue
+		if ("\\" === char) {
+			// skip next charactor
+			i++
+			continue
+		}
 		rule =
 			rules.find(({ startsWith }): boolean => {
 				return startsWith.some(expected => {
