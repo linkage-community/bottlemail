@@ -61,4 +61,11 @@ describe("Parser", () => {
 			{ kind: TextKind, value: " hi)", raw: " hi)" }
 		])
 	})
+
+	const nonURLStartsWithHTTP = "httpisgod"
+	it(`parse "${nonURLStartsWithHTTP}" as Text`, () => {
+		expect(parse(nonURLStartsWithHTTP)).toEqual([
+			{ kind: TextKind, value: "httpisgod", raw: "httpisgod" }
+		])
+	})
 })
