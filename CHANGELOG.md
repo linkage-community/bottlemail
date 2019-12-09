@@ -1,3 +1,7 @@
+2.0.2
+===
+- バグ修正: [http から始まる文字列すべてが Link と扱われる不具合の修正](https://github.com/linkage-community/bottlemail/pull/56)
+
 2.0.1
 ===
 - バグ修正: [2文字目からテキストでない何かがはじまるとバグるのを修正](https://github.com/linkage-community/bottlemail/pull/49)
