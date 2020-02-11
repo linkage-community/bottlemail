@@ -3,8 +3,10 @@ import {
 	TextKind as UnknownKind,
 	EmojiNameKind,
 	MentionKind,
-	LinkKind
+	LinkKind,
+	TextKind
 } from "./types"
+import { groupBy } from "./utils"
 
 const lowercase = "abcdefghijklmnopqrstuvwxyz".split("")
 const uppercase = lowercase.map(c => c.toUpperCase())
@@ -150,26 +152,21 @@ function* parse(source: string) {
 }
 
 function optimizeNodes(nodes: NodeType[]): NodeType[] {
-	return nodes
-		.filter(node => {
-			if (node.raw.length === 0) return false
-			return true
-		})
-		.reduce((optimizedNodes, node) => {
-			if (
-				node.kind === "Text" &&
-				optimizedNodes.length > 0 &&
-				optimizedNodes[optimizedNodes.length - 1].kind === "Text"
-			) {
-				const last = optimizedNodes.pop()!
-				last.value += node.value
-				last.raw += node.raw
-				optimizedNodes.push(last)
-				return optimizedNodes
-			}
-			optimizedNodes.push(node)
-			return optimizedNodes
-		}, [] as NodeType[])
+	return groupBy(nodes, (l, r) => l.kind === r.kind).reduce((p, c) => {
+		switch (c[0].kind) {
+			case TextKind:
+				const t = c.reduce((t, n) => t + n.raw, "")
+				if (t.length === 0) return p
+				const node: NodeType = {
+					kind: TextKind,
+					value: t,
+					raw: t
+				}
+				return [...p, node]
+			default:
+				return [...p, ...c]
+		}
+	}, [] as NodeType[])
 }
 
 export default (s: string) => {
