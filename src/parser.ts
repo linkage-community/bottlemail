@@ -152,21 +152,23 @@ function* parse(source: string) {
 }
 
 function optimizeNodes(nodes: NodeType[]): NodeType[] {
-	return groupBy(nodes, (l, r) => l.kind === r.kind).reduce((p, c) => {
-		switch (c[0].kind) {
-			case TextKind:
-				const t = c.reduce((t, n) => t + n.raw, "")
-				if (t.length === 0) return p
-				const node: NodeType = {
-					kind: TextKind,
-					value: t,
-					raw: t
-				}
-				return [...p, node]
-			default:
-				return [...p, ...c]
-		}
-	}, [] as NodeType[])
+	return groupBy(nodes, (l, r) => l.kind === r.kind)
+		.map(sameTypeNodes => {
+			switch (sameTypeNodes[0].kind) {
+				case TextKind:
+					const text = sameTypeNodes.reduce((c, n) => c + n.raw, "")
+					if (text.length === 0) return []
+					const node: NodeType = {
+						kind: TextKind,
+						value: text,
+						raw: text
+					}
+					return [node]
+				default:
+					return sameTypeNodes
+			}
+		})
+		.reduce((flatten, remain) => [...flatten, ...remain], [] as NodeType[])
 }
 
 export default (s: string) => {
