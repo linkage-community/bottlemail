@@ -20,7 +20,11 @@ export const MentionKind = "Mention"
 // eg: raw => '@dolphin', value => 'dolphin'
 export type Mention = Node<typeof MentionKind>
 
-export type NodeType = Link | Text | Mention | EmojiName
+export const ReferenceKind = "Reference"
+// eg: raw => '>>100000', value => '100000'
+export type Reference = Node<typeof ReferenceKind>
+
+export type NodeType = Link | Text | Mention | EmojiName | Reference
 
 // helpers
 export const isText = (n: NodeType): n is Text => {
@@ -34,4 +38,7 @@ export const isLink = (n: NodeType): n is Link => {
 }
 export const isMention = (n: NodeType): n is Mention => {
 	return n.kind === MentionKind
+}
+export const isReference = (n: NodeType): n is Reference => {
+	return n.kind === ReferenceKind
 }

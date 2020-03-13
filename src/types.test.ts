@@ -9,7 +9,9 @@ import {
 	EmojiNameKind,
 	TextKind,
 	LinkKind,
-	MentionKind
+	MentionKind,
+	ReferenceKind,
+	isReference
 } from "./types"
 
 const emojiNameNode: NodeType = {
@@ -31,6 +33,11 @@ const mentionNode: NodeType = {
 	kind: MentionKind,
 	value: "yo",
 	raw: "@yo"
+}
+const referenceNode: NodeType = {
+	kind: ReferenceKind,
+	value: "100",
+	raw: ">>100"
 }
 
 describe("Type Guards", () => {
@@ -72,6 +79,14 @@ describe("Type Guards", () => {
 			expect(isMention(linkNode)).toBeFalsy()
 			expect(isMention(textNode)).toBeFalsy()
 			expect(isMention(emojiNameNode)).toBeFalsy()
+		})
+	})
+	describe("isReference", () => {
+		test("when Reference -> true", () => {
+			expect(isReference(referenceNode)).toBeTruthy()
+		})
+		test("when others -> false", () => {
+			expect(isReference(mentionNode)).toBeFalsy()
 		})
 	})
 })

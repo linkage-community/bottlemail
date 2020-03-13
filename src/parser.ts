@@ -4,7 +4,8 @@ import {
 	EmojiNameKind,
 	MentionKind,
 	LinkKind,
-	TextKind
+	TextKind,
+	ReferenceKind
 } from "./types"
 import { groupBy } from "./utils"
 
@@ -57,6 +58,15 @@ const rules: Rule[] = [
 		minimumValueLength: 1,
 		includeLeaveChar: true,
 		leaveChars: [":"]
+	},
+	{
+		kind: ReferenceKind,
+		startsWith: [">>"],
+		validValueChars: [...numeric, ">"],
+		transformToValue: s => s.slice(2).replace(/\s+$/g, ""),
+		minimumValueLength: 2,
+		includeLeaveChar: true,
+		leaveChars: whitespace
 	}
 ]
 

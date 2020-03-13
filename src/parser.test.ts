@@ -1,4 +1,4 @@
-import { MentionKind, TextKind, EmojiNameKind } from "./types"
+import { MentionKind, TextKind, EmojiNameKind, ReferenceKind } from "./types"
 import parse from "./parser"
 
 import pictograph from "pictograph"
@@ -15,7 +15,7 @@ describe("Parser", () => {
 
 	describe("complex cases", () => {
 		const testcase1 =
-			"@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test"
+			">>100000 @otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test"
 		test(`must parse '${testcase1}' as equivalent to the snapshot.`, () => {
 			expect(parse(testcase1)).toMatchSnapshot()
 		})
@@ -51,6 +51,17 @@ describe("Parser", () => {
 					])
 				})
 			}
+		})
+
+		const referenceTestCase = ">>100000"
+		it(`parses "${referenceTestCase}" correctly`, () => {
+			expect(parse(referenceTestCase)).toEqual([
+				{
+					kind: ReferenceKind,
+					value: "100000",
+					raw: ">>100000"
+				}
+			])
 		})
 	})
 

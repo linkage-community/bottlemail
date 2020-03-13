@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Parser complex cases must parse '@otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test' as equivalent to the snapshot. 1`] = `
+exports[`Parser complex cases must parse '>>100000 @otofune Yo! :smile: https://github.com/ http://[fe80::a1b3:125d:c1f8:4780]/ @ @test' as equivalent to the snapshot. 1`] = `
 Array [
+  Object {
+    "kind": "Reference",
+    "raw": ">>100000 ",
+    "value": "100000",
+  },
   Object {
     "kind": "Mention",
     "raw": "@otofune",
