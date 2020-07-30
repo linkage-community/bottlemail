@@ -176,10 +176,7 @@ export default (s: string) => {
 	if (typeof s !== "string") return []
 	if (s.length === 0) return []
 
-	const nodes = [] as NodeType[]
-	for (const node of parse(s)) {
-		nodes.push(node)
-	}
+	const nodes = Array.from(parse(s))
 	const on = optimizeNodes(nodes)
 	return on
 }
