@@ -1,4 +1,4 @@
-import { MentionKind, TextKind, EmojiNameKind } from "./types"
+import { MentionKind, TextKind, EmojiNameKind, LinkKind } from "./types"
 import parse from "./parser"
 
 import pictograph from "pictograph"
@@ -51,6 +51,30 @@ describe("Parser", () => {
 					])
 				})
 			}
+		})
+
+		describe("about " + LinkKind, () => {
+			const withoutZWSP = "https://example.com"
+			const withZWSP = withoutZWSP + "\u202c"
+			it(`must remove trailing ZWSP with persent encoding`, () => {
+				const withZWSPEncoded = encodeURI(withZWSP)
+				expect(parse(encodeURI(withZWSP))).toEqual([
+					{
+						kind: LinkKind,
+						value: withoutZWSP,
+						raw: withZWSPEncoded
+					}
+				])
+			})
+			it(`must remove trailing ZWSP without persent encoding`, () => {
+				expect(parse(withZWSP)).toEqual([
+					{
+						kind: LinkKind,
+						value: withoutZWSP,
+						raw: withZWSP
+					}
+				])
+			})
 		})
 	})
 
