@@ -170,7 +170,7 @@ function combineStraightTextNodes(nodes: NodeType[]): NodeType[] {
 		})
 		.reduce((flatten, remain) => [...flatten, ...remain], [] as NodeType[])
 }
-const ZWSP = ["\u202c", "%E2%80%AC"]
+const ZWSP = ["\u202c", encodeURIComponent("\u202c")]
 function removeTrailingZWSPFromLinkNodeValue(nodes: NodeType[]): NodeType[] {
 	return nodes.map(node => {
 		switch (node.kind) {

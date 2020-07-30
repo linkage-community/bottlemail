@@ -54,20 +54,19 @@ describe("Parser", () => {
 		})
 
 		describe("about " + LinkKind, () => {
+			const withoutZWSP = "https://example.com"
+			const withZWSP = withoutZWSP + "\u202c"
 			it(`must remove trailing ZWSP with parsent encoding`, () => {
-				const withoutZWSP = "https://example.com"
-				const withZWSP = withoutZWSP + "%E2%80%AC"
-				expect(parse(withZWSP)).toEqual([
+				const withZWSPEncoded = encodeURI(withZWSP)
+				expect(parse(encodeURI(withZWSP))).toEqual([
 					{
 						kind: LinkKind,
 						value: withoutZWSP,
-						raw: withZWSP
+						raw: withZWSPEncoded
 					}
 				])
 			})
 			it(`must remove trailing ZWSP without parsent encoding`, () => {
-				const withoutZWSP = "https://example.com"
-				const withZWSP = withoutZWSP + "\u202c"
 				expect(parse(withZWSP)).toEqual([
 					{
 						kind: LinkKind,
