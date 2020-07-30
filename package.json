@@ -1,6 +1,6 @@
 {
   "name": "@linkage-community/bottlemail",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/linkage-community/postbody.git",
