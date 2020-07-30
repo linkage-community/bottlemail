@@ -151,7 +151,7 @@ function* parse(source: string) {
 	yield consume(rule, source.length)
 }
 
-function optimizeNodes(nodes: NodeType[]): NodeType[] {
+function combineStraightTextNodes(nodes: NodeType[]): NodeType[] {
 	return groupBy(nodes, (l, r) => l.kind === r.kind)
 		.map(sameTypeNodes => {
 			switch (sameTypeNodes[0].kind) {
@@ -170,13 +170,39 @@ function optimizeNodes(nodes: NodeType[]): NodeType[] {
 		})
 		.reduce((flatten, remain) => [...flatten, ...remain], [] as NodeType[])
 }
+const ZWSP = ["\u202c", "%E2%80%AC"]
+function removeTrailingZWSPFromLinkNodeValue(nodes: NodeType[]): NodeType[] {
+	return nodes.map(node => {
+		switch (node.kind) {
+			case LinkKind: {
+				if (!ZWSP.some(s => node.value.endsWith(s))) return node
+				return {
+					...node,
+					value: ZWSP.reduce((value, zwsp) => {
+						if (!value.endsWith(zwsp)) return value
+						return value
+							.split("")
+							.slice(0, -zwsp.length)
+							.join("")
+					}, node.value)
+				}
+			}
+			default:
+				return node
+		}
+	})
+}
 
+const compose = <T>(...handlers: ((a: T) => T)[]) => (a: T) =>
+	handlers.reduce((a, h) => h(a), a)
+const optimize = compose(
+	combineStraightTextNodes,
+	removeTrailingZWSPFromLinkNodeValue
+)
 export default (s: string) => {
 	// TypeScript scripts will be compiled to JavaScript, so users can pass ANY values not string...
 	if (typeof s !== "string") return []
 	if (s.length === 0) return []
 
-	const nodes = Array.from(parse(s))
-	const on = optimizeNodes(nodes)
-	return on
+	return optimize(Array.from(parse(s)))
 }
