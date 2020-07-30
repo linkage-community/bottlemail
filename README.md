@@ -36,7 +36,7 @@ console.dir(nodes)
 - 開始文字によって Kind の判定が始まる
 - `\` (バックスラッシュ) があると次の文字の開始文字判定がスキップされる
 
-NodeType はどういうデータなの
+NodeType について
 ---
 
 詳しくは [src/types.ts](./src/types.ts) を参照するとよい
@@ -59,12 +59,17 @@ type NodeType = {
 ウェブサイト|`Link`|`https://github.com`|`https://github.com`
 
 ### Type Guard
-`is${kind}` というヘルパ関数があり、これも [src/types.ts](./src/types.ts) に置いている
+`is${kind}` というヘルパ関数があるので、これを使うとよい。
+[src/types.ts](./src/types.ts) に定義されているが、[src/index.ts](./src/index.ts) から re-export されているため、直接 import できる
 
 ## 想定 Q&A
 
 ### 空文字列 (`""`) のときはどのような結果になりますか？
-空の配列になる
+空配列になる
 
 ### 例外は発生しますか？
-発生しない。もし発生したら例外なので報告を。
+発生しない。文字列でないものが与えられた場合、空配列になる
+
+### `Link` Kind では、`node.raw` と `node.value` に違いはありますか？
+URL として無効な文字列を除去したものが入る。  
+現在は iOS でコピーアンドペーストすると稀に発生することがある、末尾についた ZWSP (ゼロ幅スペース) を除去する。

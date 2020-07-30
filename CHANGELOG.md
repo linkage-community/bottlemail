@@ -1,3 +1,9 @@
+3.0.0
+===
+- Breaking Change: [Link の際 ZWSP を除去した値を node.value に入れるように](https://github.com/linkage-community/bottlemail/pull/185)
+	+ これまで `node.raw` == `node.value` でした
+	+ これからは `node.value` を使用することを推奨します
+
 2.1.0
 ===
 - 新機能: [バックスラッシュでルール検出をスキップできるように](https://github.com/linkage-community/bottlemail/pull/60)
