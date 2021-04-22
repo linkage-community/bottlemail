@@ -9,7 +9,7 @@
   "private": false,
   "devDependencies": {
     "@types/jest": "^26.0.14",
-    "@types/node": "^14.11.10",
+    "@types/node": "^14.14.41",
     "codecov": "^3.8.0",
     "jest": "^25.5.4",
     "pictograph": "^2.3.0",
